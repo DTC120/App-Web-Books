@@ -7,8 +7,8 @@ interface Book {
   id: number
   title: string
   author: string
-  description?: string
-  imageUrl?: string
+  description?: string | null
+  imageUrl?: string | null
 }
 
 export default function EditBookForm({ book }: { book: Book }) {
