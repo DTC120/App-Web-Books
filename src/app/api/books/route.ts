@@ -1,7 +1,7 @@
 export const dynamic = 'force-dynamic';
+import { revalidatePath } from 'next/cache'
 import { NextRequest, NextResponse } from 'next/server'
 import { getBooks, createBook } from '@/lib/books'
-import { revalidatePath } from 'next/cache'
 
 export async function GET() {
   try {
@@ -20,7 +20,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Title and author are required' }, { status: 400 })
     }
     const book = await createBook({ title, author, description, imageUrl })
-    revalidatePath('/')
+    revalidatePath('/', 'layout')
     return NextResponse.json(book, { status: 201 })
   } catch (error) {
     return NextResponse.json({ error: 'Error creating book' }, { status: 500 })

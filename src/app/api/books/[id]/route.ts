@@ -1,7 +1,8 @@
 export const dynamic = 'force-dynamic';
+import { revalidatePath } from 'next/cache'
 import { NextRequest, NextResponse } from 'next/server'
 import { getBook, updateBook, deleteBook } from '@/lib/books'
-import { revalidatePath } from 'next/cache'
+
 
 export async function GET(
   request: NextRequest,
@@ -28,7 +29,7 @@ export async function PUT(
     const body = await request.json()
     const { title, author, description, imageUrl } = body
     const book = await updateBook(id, { title, author, description, imageUrl })
-    revalidatePath('/')
+    revalidatePath('/', 'layout')
     revalidatePath(`/books/${id}`)
     return NextResponse.json(book)
   } catch (error) {
@@ -43,7 +44,7 @@ export async function DELETE(
   try {
     const id = parseInt(params.id)
     await deleteBook(id)
-    revalidatePath('/')
+    revalidatePath('/', 'layout')
     return NextResponse.json({ message: 'Book deleted' })
   } catch (error) {
     return NextResponse.json({ error: 'Error deleting book' }, { status: 500 })
