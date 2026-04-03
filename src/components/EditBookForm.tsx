@@ -28,6 +28,7 @@ export default function EditBookForm({ book }: { book: Book }) {
       body: JSON.stringify({ title, author, description, imageUrl }),
     })
     if (response.ok) {
+        router.refresh()
       router.push(`/books/${book.id}`)
     } else {
       alert('Error al editar el libro')
