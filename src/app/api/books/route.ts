@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic';
 import { NextRequest, NextResponse } from 'next/server'
 import { getBooks, createBook } from '@/lib/books'
 import { revalidatePath } from 'next/cache'
